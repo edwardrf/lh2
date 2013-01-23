@@ -1,0 +1,11 @@
+<div ng-controller="EditorCtrl">
+<h2>Edit</h2>
+<div>
+	<table class="large lamp">
+		<tr ng-repeat="row in lamps">
+			<td ng-repeat="col in row"><div style="background-color:{{col|lampColor}}; box-shadow: 0 0 10px 5px {{col|shadowColor}};"></div></td>
+		</tr>
+	</table>
+	<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
+	<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
+</div>

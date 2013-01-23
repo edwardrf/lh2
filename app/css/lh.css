@@ -1,0 +1,29 @@
+table.lamp {
+	background-color: #555555;
+}
+
+table.lamp tbody tr:nth-child(even){
+	background-color: transparent;
+}
+
+table.lamp.large {
+	border-spacing: 10px;
+}
+
+table.lamp.large td {
+	padding: 0;
+	width: 40px;
+	height: 40px;
+}
+
+.lamp div{
+	height: 100%;
+	width: 100%;
+	-webkit-border-radius: 1000px;
+	-moz-border-radius: 1000px;
+	-ms-border-radius: 1000px;
+	-o-border-radius: 1000px;
+	border-radius: 1000px;
+	border: 1px solid #CCCCCC;
+	box-shadow: 0, 0, 10, transparent;
+}
