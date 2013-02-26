@@ -1,21 +1,15 @@
 <div ng-controller="EditorCtrl">
 <h2>Edit</h2>
-<div>
-	<table class="large lamp">
-		<tr ng-repeat="row in lamps">
-			<td ng-repeat="col in row"><div style="background-color:{{col|lampColor}}; box-shadow: 0 0 10px 5px {{col|shadowColor}};"></div></td>
-		</tr>
-	</table>
-	<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
-	<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
-
-	<div>
-		<ul>
-			<li><a href="">hello 1</a></li>
-			<li><a href="">hello 2</a></li>
-			<li><a href="">hello 3</a></li>
-		</ul>
-		<hr>
+<div class='row'>
+	<div class="eight columns">
+		<table class="large lamp">
+			<tr ng-repeat="row in lamps">
+				<td ng-repeat="col in row" ng-mousemove="clk($index, $parent.$index, $event)" ng-mousedown="nodrag($event)"><div style="background-color:{{col|lampColor}}; box-shadow: 0 0 10px 5px {{col|shadowColor}};"></div></td>
+			</tr>
+		</table>
+		<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
+		<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
 	</div>
-	<em><span class="hello"></span></em>
+	<!-- <div class="four columns" ng-include src='color-selector-grayscale.html'>asdfasdf</div> -->
+	<div class="four columns" ng-include src="'partials/color-selector-grayscale.html'"> This is very strange</div>
 </div>

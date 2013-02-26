@@ -1,5 +1,6 @@
 'use strict';
 
+/*global angular*/
 /* Filters */
 
 function intToHexColor(input){
@@ -19,19 +20,33 @@ function offsetColor(input, offset){
 	return output;
 }
 
+function grayToHexColor(gray) {
+  var intval = gray * 16 * 256 * 256 + gray * 16 * 256;
+  return intToHexColor(offsetColor(intval, 0x66));
+}
+
+function grayToShadowColor (gray) {
+  var intval = gray * 16 * 256 * 256 + gray * 16 * 256;
+  return intToHexColor(offsetColor(intval, 0x66) - 0x222200);
+}
+
 angular.module('myApp.filters', []).
   filter('interpolate', ['version', function(version) {
     return function(text) {
       return String(text).replace(/\%VERSION\%/mg, version);
     };
   }]).filter('color', function() {
-  	return intToHexColor;
+    return intToHexColor;
   }).filter('lampColor', function(){
-  	return function(input){
-  		return intToHexColor(offsetColor(input, 0x66));
-  	};
+    return function(input){
+      return intToHexColor(offsetColor(input, 0x66));
+    };
   }).filter('shadowColor', function(){
-  	return function(input){
-  		return intToHexColor(offsetColor(input, 0x66) - 0x222222);
-  	}
+    return function(input){
+      return intToHexColor(offsetColor(input, 0x66) - 0x222222);
+    };
+  }).filter('grayToHexColor', function(){
+    return grayToHexColor;
+  }).filter('grayToShadowColor', function(){
+    return grayToShadowColor;
   });
