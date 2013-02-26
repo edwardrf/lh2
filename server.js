@@ -32,6 +32,19 @@ app.configure('development', function(){
 app.get('/idx', routes.index);
 app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+io = require('socket.io').listen(server);
+
+io.sockets.on('connection', function(socket){
+  socket.on('msg', function(data){
+    console.log('Message', data.msg);
+    socket.emit('update', {msg: data.msg + ' is not news.'});
+  });
+  socket.on('all', function(data){
+    console.log('requesting broadcasting to all', data.msg);
+    io.sockets.emit('update', {msg: data.msg + ' is the news.'});
+  });
 });
