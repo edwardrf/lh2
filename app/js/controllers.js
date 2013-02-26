@@ -1,11 +1,21 @@
-'use strict';
+/*global io*/
+/*global console*/
 
-/*global console */
+'use strict';
 
 /* Controllers */
 function millis(){
 	var d = new Date();
+
 }
+
+function MyCtrl1() {}
+MyCtrl1.$inject = [];
+
+
+function MyCtrl2() {
+}
+MyCtrl2.$inject = [];
 
 function EditorCtrl($scope, frame){
 	$scope.timer = null;
@@ -27,6 +37,14 @@ function EditorCtrl($scope, frame){
 	$scope.stop = function(){
 		clearTimeout($scope.timer);
 		console.log([st, at]);
+	}
+}
+// EditorCtrl.$inject = ['$scope'];
+function ImportCtrl($scope){
+	var socket = io.connect('http://localhost:3000/');
+	$scope.msg = 'Message';
+	$scope.sendMessage = function(){
+		socket.emit('msg', {msg:$scope.msg});
 	};
 
 	$scope.clk = function(a, b, e){
@@ -34,9 +52,20 @@ function EditorCtrl($scope, frame){
 		if(e.which == 1) $scope.lamps[b][a] = 0xFFFFFF;
 	};
 
+	$scope.sendAll = function(){
+		socket.emit('all', {msg:$scope.msg});
+	};
+
 	$scope.nodrag = function(e) {
 		e.preventDefault();
 	};
+
+	socket.on('update', function(data){
+		console.log('Server responded with ', data.msg);
+		$scope.$apply(function(){
+			$scope.msg = data.msg;
+		});
+	});
 }
 // EditorCtrl.$inject = ['$scope'];
 

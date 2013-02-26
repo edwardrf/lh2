@@ -7,5 +7,6 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
     $routeProvider.when('/edit', {templateUrl: 'partials/edit.html'});
     $routeProvider.when('/play', {templateUrl: 'partials/play.html'});
     $routeProvider.when('/export', {templateUrl: 'partials/export.html'});
+    $routeProvider.when('/import', {templateUrl: 'partials/import.html'});
     $routeProvider.otherwise({redirectTo: '/edit'});
   }]);
