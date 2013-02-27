@@ -1,7 +1,7 @@
 <div ng-controller='ColorSelectGrayScaleCtrl'>
 	<table class="medium lamp">
-		<tr ng-repeat='g in grayRange' ng-class='{selected: $index == gray}'>
-			<td>
+		<tr ng-repeat='g in grayRange' ng-class='{selected: g == gray}'>
+			<td ng-click='setGray(g);'>
 				<div style="background-color:{{g|grayToHexColor}}; box-shadow: 0 0 7px 4px {{g|grayToShadowColor}};"></div>
 			</td>
 		</tr>

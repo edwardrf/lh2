@@ -9,15 +9,7 @@ function millis(){
 
 }
 
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
-}
-MyCtrl2.$inject = [];
-
-function EditorCtrl($scope, frame){
+function EditorCtrl($scope, frame, color){
 	$scope.timer = null;
 	$scope.lamps = frame.newFrame();
 
@@ -37,7 +29,16 @@ function EditorCtrl($scope, frame){
 	$scope.stop = function(){
 		clearTimeout($scope.timer);
 		console.log([st, at]);
-	}
+	};
+
+	$scope.clk = function(a, b, e){
+		console.log(e);
+		var g = color.getColor();
+		if(e.which == 1) $scope.lamps[b][a] = g * 16 * 256 * 256 + g * 16 * 256;
+	};
+	$scope.nodrag = function(e) {
+		e.preventDefault();
+	};
 }
 // EditorCtrl.$inject = ['$scope'];
 function ImportCtrl($scope){
@@ -47,17 +48,8 @@ function ImportCtrl($scope){
 		socket.emit('msg', {msg:$scope.msg});
 	};
 
-	$scope.clk = function(a, b, e){
-		console.log(e);
-		if(e.which == 1) $scope.lamps[b][a] = 0xFFFFFF;
-	};
-
 	$scope.sendAll = function(){
 		socket.emit('all', {msg:$scope.msg});
-	};
-
-	$scope.nodrag = function(e) {
-		e.preventDefault();
 	};
 
 	socket.on('update', function(data){
@@ -69,7 +61,12 @@ function ImportCtrl($scope){
 }
 // EditorCtrl.$inject = ['$scope'];
 
-function ColorSelectGrayScaleCtrl($scope){
+function ColorSelectGrayScaleCtrl($scope, color){
 	$scope.grayRange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 	$scope.gray = 0;
+
+	$scope.setGray = function(g){
+		$scope.gray = g;
+		color.setColor(g);
+	};
 }

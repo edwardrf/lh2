@@ -42,4 +42,8 @@ angular.module('myApp.services', []).
 			if(i > 0xFFFFFF) i = 0;
 		};
 		return frame;
+	}).factory('color', function(){
+		var color = {currentColor: 0x000000};
+		color.setColor = function(c){color = c;};
+		color.getColor = function(){return color;};
 	});
