@@ -15,7 +15,7 @@ function EditorCtrl($scope, frame, color, $rootScope){
 	var at = 0;
 	var msgcnt = 0;
 	var offset = $('table.large.lamp').offset();
-	var lastApplyTime = 0;
+	var onGoingTouches = [];
 
 	$scope.run = function(){
 		var s = Date.now();
@@ -31,31 +31,89 @@ function EditorCtrl($scope, frame, color, $rootScope){
 		clearTimeout($scope.timer);
 	};
 
+	$scope.brushStart = function(a, b, e){
+		e.preventDefault();
+		var touches = e.changedTouches;
+		for (var i=0; i<touches.length; i++) {
+			onGoingTouches.push(touches[i]);
+		}
+	};
+
 	$scope.brush = function(a, b, e){
 		e.preventDefault();
 		var g = color.getColor();
 		if(e.type=='touchmove'){
+			// console.log(e);
 			var touches = e.changedTouches;
 			for(var i=0; i<touches.length; i++) {
-				var aa = Math.floor((touches[i].pageX - offset.left) / 50);
-				var bb = Math.floor((touches[i].pageY - offset.top) / 50);
-				console.log('touchmove', bb, aa);
-				if(aa >=0 && aa < 10 && bb >= 0 && bb < 10){
-					$scope.lamps[bb][aa] = g;
-				}
-			}
-			if(lastApplyTime == 0){
-				lastApplyTime = (new Date()).getTime();
-			}
-			if((new Date()).getTime() - lastApplyTime > 500){
-				$scope.$apply();
-				console.log((new Date()).getTime());
+				var idx = ongoingTouchIndexById(touches[i].identifier);
+				var fa = pxToX(onGoingTouches[idx].pageX);
+				var fb = pxToY(onGoingTouches[idx].pageY);
+				var ta = pxToX(touches[i].pageX);
+				var tb = pxToY(touches[i].pageY);
+				line(fa, fb, ta, tb, g);
+				//$scope.lamps[bb][aa] = g;
+				console.log(fa, fb, ta, tb, g);
+				onGoingTouches.splice(idx, 1, touches[i]);
 			}
 		}else if(e.which == 1) {
-			$scope.lamps[b][a] = g * 16 * 256 * 256 + g * 16 * 256;
-			//console.log(g * 16 * 256 * 256 + g * 16 * 256, $scope.lamps[b][a]);
+			dot(a, b, g);
 		}
 	};
+
+	$scope.brushEnd = function(a, b, e){
+		e.preventDefault();
+		var touches = e.changedTouches;
+		for (var i=0; i<touches.length; i++) {
+			var idx = ongoingTouchIndexById(touches[i].identifier);
+			onGoingTouches.splice(idx, 1);
+		}
+	};
+
+	function line(x0, y0, x1, y1, g){
+		var dx = x1 - x0;
+		var dy = y1 - y0;
+
+		var D = 2 * dy - dx;
+		dot(x0, y0, g);
+		var y = y0;
+
+		for(var x = x0 + 1; x <= x1; x++){
+			if(D > 0){
+				y = y + 1;
+				dot(x,y, g);
+				D = D + (2 * dy - 2 * dx);
+			}else{
+				dot(x, y, g);
+				D = D + (2 * dy);
+			}
+		}
+	}
+
+	function dot(x, y, g){
+		if(x >= 0 && x < 10 && y >= 0 && y < 10){
+			$scope.lamps[y][x] = g * 16 * 256 * 256 + g * 16 * 256;
+		}
+	}
+
+	function ongoingTouchIndexById(idToFind) {
+		for (var i=0; i<onGoingTouches.length; i++) {
+			var id = onGoingTouches[i].identifier;
+			if (id == idToFind) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	function pxToX(px){
+		return Math.floor((px - offset.left) / 50);
+	}
+
+	function pxToY(px){
+		return Math.floor((px - offset.top) / 50);
+	}
+
 	$scope.nodrag = function(e) {
 		e.preventDefault();
 	};

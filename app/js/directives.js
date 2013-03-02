@@ -34,9 +34,9 @@ angular.module('myApp.directives', []).
 		return function(scope, elm, attrs) {
 			var fn = $parse(attrs['touchMove']);
 			elm.bind("touchmove", function(event){
-				// scope.$apply(function(){
+				scope.$apply(function(){
 					fn(scope, {$event:event});
-				// });
+				});
 			});
 		};
 	}]).
