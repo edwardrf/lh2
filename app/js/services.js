@@ -44,6 +44,7 @@ angular.module('myApp.services', []).
 		return frame;
 	}).factory('color', function(){
 		var color = {currentColor: 0x000000};
-		color.setColor = function(c){color = c;};
-		color.getColor = function(){return color;};
+		color.setColor = function(c){this.currentColor = c;};
+		color.getColor = function(){return this.currentColor;};
+		return color;
 	});

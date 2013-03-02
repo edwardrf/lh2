@@ -1,9 +1,10 @@
-<div ng-controller='ColorSelectGrayScaleCtrl'>
+<div ng-controller='ColorSelectGrayScaleCtrl' mouse-wheel='scroll($event)'>
 	<table class="medium lamp">
 		<tr ng-repeat='g in grayRange' ng-class='{selected: g == gray}'>
-			<td ng-click='setGray(g);'>
+			<td ng-click='setGray(g)' touch-start='setGray(g)' touch-move='setGray(g)'>
 				<div style="background-color:{{g|grayToHexColor}}; box-shadow: 0 0 7px 4px {{g|grayToShadowColor}};"></div>
 			</td>
 		</tr>
 	</table>
+	<div>{{msg}}</div>
 </div>
