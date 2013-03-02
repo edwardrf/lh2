@@ -15,6 +15,7 @@ function EditorCtrl($scope, frame, color, $rootScope){
 	var at = 0;
 	var msgcnt = 0;
 	var offset = $('table.large.lamp').offset();
+	var lastApplyTime = 0;
 
 	$scope.run = function(){
 		var s = Date.now();
@@ -34,9 +35,22 @@ function EditorCtrl($scope, frame, color, $rootScope){
 		e.preventDefault();
 		var g = color.getColor();
 		if(e.type=='touchmove'){
-			var aa = Math.floor((e.touches[0].pageX - offset.left) / 50);
-			var bb = Math.floor((e.touches[0].pageY - offset.top) / 50);
-			$scope.lamps[bb][aa] = g * 16 * 256 * 256 + g * 16 * 256;
+			var touches = e.changedTouches;
+			for(var i=0; i<touches.length; i++) {
+				var aa = Math.floor((touches[i].pageX - offset.left) / 50);
+				var bb = Math.floor((touches[i].pageY - offset.top) / 50);
+				console.log('touchmove', bb, aa);
+				if(aa >=0 && aa < 10 && bb >= 0 && bb < 10){
+					$scope.lamps[bb][aa] = g;
+				}
+			}
+			if(lastApplyTime == 0){
+				lastApplyTime = (new Date()).getTime();
+			}
+			if((new Date()).getTime() - lastApplyTime > 500){
+				$scope.$apply();
+				console.log((new Date()).getTime());
+			}
 		}else if(e.which == 1) {
 			$scope.lamps[b][a] = g * 16 * 256 * 256 + g * 16 * 256;
 			//console.log(g * 16 * 256 * 256 + g * 16 * 256, $scope.lamps[b][a]);
