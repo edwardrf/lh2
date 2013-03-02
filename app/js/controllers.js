@@ -4,32 +4,6 @@
 
 'use strict';
 
-var globalColor = 0;
-var globalLampDoms = [];
-var globalLampDivDoms = [];
-var offset;
-
-function fastbrush(e){
-	e.preventDefault();
-	// alert(e.type);
-	// if(e.type && e.type=='touchmove'){
-		var touches = e.changedTouches;
-		for(var i=0; i<touches.length; i++) {
-			var aa = Math.floor((touches[i].pageX - offset.left) / 50);
-			var bb = Math.floor((touches[i].pageY - offset.top) / 50);
-			console.log('touchmove', bb, aa);
-			if(aa >=0 && aa < 10 && bb >= 0 && bb < 10){
-				// setTimeout(function(){
-					globalLampDivDoms[bb][aa].css({
-						'background-color' : grayToHexColor(globalColor),
-						// 'box-shadow' : '0 0 10px 5px ' + grayToShadowColor(globalColor)
-					});
-				// },3000);
-			}
-		}
-	// }
-}
-
 /* Controllers */
 
 function EditorCtrl($scope, frame, color, $rootScope){
@@ -40,7 +14,7 @@ function EditorCtrl($scope, frame, color, $rootScope){
 	var st = 0;
 	var at = 0;
 	var msgcnt = 0;
-	// var offset = $('table.large.lamp').offset();
+	var offset = $('table.large.lamp').offset();
 
 	$scope.run = function(){
 		var s = Date.now();
@@ -62,13 +36,6 @@ function EditorCtrl($scope, frame, color, $rootScope){
 		if(e.type=='touchmove'){
 			var aa = Math.floor((e.touches[0].pageX - offset.left) / 50);
 			var bb = Math.floor((e.touches[0].pageY - offset.top) / 50);
-			$scope.message = "x:" + e.touches[0].pageX + "y:" + e.touches[0].pageY +
-			'a : ' + aa + ' b : ' + bb +
-			//"New message " + e + " cnt: " + msgcnt++ + ' gray: ' + g + " color: " +
-			// $scope.lamps[b][a] + " which:" + e.which +
-			// "b:" + b + " a:" + a +
-			// "x:" + e.touches[0].pageX + "y:" + e.touches[0].pageY
-			" target:" + e.touches[0].target;
 			$scope.lamps[bb][aa] = g * 16 * 256 * 256 + g * 16 * 256;
 		}else if(e.which == 1) {
 			$scope.lamps[b][a] = g * 16 * 256 * 256 + g * 16 * 256;
@@ -79,26 +46,6 @@ function EditorCtrl($scope, frame, color, $rootScope){
 		e.preventDefault();
 	};
 
-	$scope.initGlobal = function(){
-		globalLampDoms = [];
-		globalLampDivDoms = [];
-		// Prepare the global lamps dom
-		for(var i = 0; i < 10; i++){
-			var row = [];
-			var rowDiv = [];
-			for(var j = 0; j < 10; j++){
-				var td = $('td.col' + j + '.' + 'row' + i);
-				row.push(td);
-				td.bind('touchmove', fastbrush);
-				td.bind('touchstart', fastbrush);
-				rowDiv.push(td.find('div'));
-			}
-			globalLampDoms.push(row);
-			globalLampDivDoms.push(rowDiv);
-		}
-		offset = $('table.large.lamp').offset();
-		console.log(globalLampDoms);
-	};
 }
 // EditorCtrl.$inject = ['$scope'];
 function ImportCtrl($scope){
@@ -129,7 +76,6 @@ function ColorSelectGrayScaleCtrl($scope, color){
 	$scope.setGray = function(g){
 		$scope.gray = g;
 		color.setColor(g);
-		globalColor = g;
 	};
 
 	$scope.scroll = function(event){
@@ -137,7 +83,6 @@ function ColorSelectGrayScaleCtrl($scope, color){
 		if(event.wheelDeltaY > 0 && $scope.gray > 0)  $scope.gray--;
 		if(event.wheelDeltaY < 0 && $scope.gray < 15) $scope.gray++;
 		color.setColor($scope.gray);
-		globalColor = $scope.gray;
 	};
 }
 
