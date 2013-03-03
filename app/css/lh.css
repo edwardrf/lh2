@@ -1,46 +1,44 @@
-table.lamp {
+.lamp {
 	background-color: #555555;
 	cursor: crosshair;
+	width: 400px;
 }
 
-table.lamp tbody tr:nth-child(even){
-	background-color: transparent;
+.lamp.large>div.row {
+	margin-left: 0px;
 }
 
-table.lamp td {
+.lamp>div>div {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	float: left;
 }
 
-table.lamp.large {
-	border-spacing: 10px;
-}
-
-table.lamp.large td {
+.lamp.large>div>div{
 	padding: 0;
 	width: 40px;
 	height: 40px;
 }
 
-table.lamp.medium {
+.lamp.medium {
 	border-spacing: 5px;
 }
 
-table.lamp.medium td{
+.lamp.medium td{
 	padding: 0;
 	width: 30px;
 	height: 30px;
 }
 
-table.lamp tr.selected{
+.lamp tr.selected{
 	outline: 2px solid #FF0000;
 }
 
-.lamp div{
+.lamp div.individualLamp div{
 	height: 100%;
 	width: 100%;
 	-webkit-border-radius: 1000px;

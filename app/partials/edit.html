@@ -2,16 +2,17 @@
 <h2>Edit</h2>
 <div class='row'>
 	<div class="eight columns">
-		<table class="large lamp">
-			<tr ng-repeat="row in lamps">
-				<td 
+		<div class="large lamp">
+			<div class="row" ng-repeat="row in lamps">
+				<div 
 				ng-repeat="col in row" 
 				ng-mousemove="brush($index, $parent.$index, $event)" 
 				ng-mousedown="nodrag($event)" 
-				ng-class="['row' + $parent.$index, 'col' + $index]">
-				<div style="background-color:{{col|lampColor}};"></div></td>
-			</tr>
-		</table>
+				ng-class="['row' + $parent.$index, 'col' + $index]"
+				class="individualLamp">
+				<div style="background-color:{{col|lampColor}};"></div></div>
+			</div>
+		</div>
 		<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
 		<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
 	</div>

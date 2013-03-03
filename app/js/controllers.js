@@ -19,12 +19,9 @@ function fastbrush(e){
 			var bb = Math.floor((touches[i].pageY - offset.top) / 50);
 			console.log('touchmove', bb, aa);
 			if(aa >=0 && aa < 10 && bb >= 0 && bb < 10){
-				// setTimeout(function(){
-					globalLampDivDoms[bb][aa].css({
-						'background-color' : grayToHexColor(globalColor),
-						// 'box-shadow' : '0 0 10px 5px ' + grayToShadowColor(globalColor)
-					});
-				// },3000);
+				globalLampDivDoms[bb][aa].css({
+					'background-color' : grayToHexColor(globalColor),
+				});
 			}
 		}
 	// }
@@ -87,7 +84,7 @@ function EditorCtrl($scope, frame, color, $rootScope){
 			var row = [];
 			var rowDiv = [];
 			for(var j = 0; j < 10; j++){
-				var td = $('td.col' + j + '.' + 'row' + i);
+				var td = $('div.col' + j + '.' + 'row' + i);
 				row.push(td);
 				td.bind('touchmove', fastbrush);
 				td.bind('touchstart', fastbrush);
@@ -96,7 +93,7 @@ function EditorCtrl($scope, frame, color, $rootScope){
 			globalLampDoms.push(row);
 			globalLampDivDoms.push(rowDiv);
 		}
-		offset = $('table.large.lamp').offset();
+		offset = $('div.large.lamp').offset();
 		console.log(globalLampDoms);
 	};
 }
