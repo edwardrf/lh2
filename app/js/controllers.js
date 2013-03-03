@@ -89,14 +89,15 @@ function EditorCtrl($scope, frame, color, $rootScope){
 			for(var j = 0; j < 10; j++){
 				var td = $('td.col' + j + '.' + 'row' + i);
 				row.push(td);
-				td.bind('touchmove', fastbrush);
-				td.bind('touchstart', fastbrush);
 				rowDiv.push(td.find('div'));
 			}
 			globalLampDoms.push(row);
 			globalLampDivDoms.push(rowDiv);
 		}
-		offset = $('table.large.lamp').offset();
+		var table = $('table.large.lamp');
+		table.bind('touchmove', fastbrush);
+		table.bind('touchstart', fastbrush);
+		offset = table.offset();
 		console.log(globalLampDoms);
 	};
 }
