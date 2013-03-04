@@ -1,12 +1,15 @@
 'use strict';
 
 /*global angular*/
+/*global console*/
 /* Filters */
+
+var gc = 0;
 
 function intToHexColor(input){
 	var tmp = ("00000" + input.toString(16));
 	tmp = tmp.substr(tmp.length - 6, 6);
-	return "#" + tmp;	
+	return "#" + tmp;
 }
 
 function offsetColor(input, offset){
@@ -22,6 +25,7 @@ function offsetColor(input, offset){
 
 function grayToHexColor(gray) {
   var intval = gray * 16 * 256 * 256 + gray * 16 * 256;
+  console.log('calculate gray : ' + gc++ + '\tgray :' + gray);
   return intToHexColor(offsetColor(intval, 0x66));
 }
 
@@ -30,7 +34,7 @@ function grayToShadowColor (gray) {
   return intToHexColor(offsetColor(intval, 0x66) - 0x222200);
 }
 
-angular.module('myApp.filters', []).
+angular.module('lh.filters', []).
   filter('interpolate', ['version', function(version) {
     return function(text) {
       return String(text).replace(/\%VERSION\%/mg, version);
