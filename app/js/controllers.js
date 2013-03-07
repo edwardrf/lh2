@@ -56,8 +56,8 @@ function ColorSelectGrayScaleCtrl($scope, color){
 
 	$scope.scroll = function(event){
 		event.preventDefault();
-		if(event.wheelDeltaY > 0 && $scope.gray > 0)  $scope.gray--;
-		if(event.wheelDeltaY < 0 && $scope.gray < 15) $scope.gray++;
+		if(event.originalEvent.wheelDeltaY > 0 && $scope.gray > 0)  $scope.gray--;
+		if(event.originalEvent.wheelDeltaY < 0 && $scope.gray < 15) $scope.gray++;
 		color.setColor($scope.gray);
 	};
 }

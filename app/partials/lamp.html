@@ -1,0 +1,7 @@
+<table class="large lamp">
+	<tr ng-repeat="row in data">
+		<td ng-repeat="col in row" ng-class="['row' + $parent.$index, 'col' + $index]">
+			<div style="background-color:{{col|grayToHexColor}};"></div>
+		</td>
+	</tr>
+</table>
