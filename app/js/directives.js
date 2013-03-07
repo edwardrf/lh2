@@ -49,4 +49,15 @@ angular.module('lh.directives', []).
 				});
 			});
 		};
+	}]).
+	directive('console', ['$parse', function($parse){
+		return {
+			scope	:{console: '='},
+			transclude: true,
+			compile	: function compile(tElement, tAttrs) {
+				return function postLink(scope, iElement, iAttrs) {
+					console.log(scope.console);
+				};
+			}
+		};
 	}]);

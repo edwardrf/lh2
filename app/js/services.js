@@ -1,7 +1,8 @@
 'use strict';
 
 /* Services */
-/*global angular console*/
+/*global angular*/
+/*global console*/
 
 
 // Demonstrate how to register services
@@ -18,7 +19,7 @@ angular.module('lh.services', []).
 			for(var i = 0; i < SIZE; i++){
 				var ff = [];
 				for(var j = 0; j < SIZE; j++){
-					ff.push(0xFFFF00);
+					ff.push(15);
 				}
 				f.push(ff);
 			}
@@ -43,7 +44,7 @@ angular.module('lh.services', []).
 		};
 		return frame;
 	}).factory('color', function(){
-		var color = {currentColor: 0x000000};
+		var color = {currentColor: 0};
 		color.setColor = function(c){this.currentColor = c;};
 		color.getColor = function(){return this.currentColor;};
 		return color;

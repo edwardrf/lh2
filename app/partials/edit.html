@@ -2,22 +2,10 @@
 <h2>Edit</h2>
 <div class='row'>
 	<div class="eight columns">
-		<table class="large lamp">
-			<tr ng-repeat="row in lamps">
-				<td 
-				ng-repeat="col in row" 
-				ng-mousemove="brush($index, $parent.$index, $event)" 
-				ng-mousedown="nodrag($event)" 
-				touch-move="brush($index, $parent.$index, $event)"
-				touch-start="brushStart($index, $parent.$index, $event)"
-				touch-end="brushEnd($index, $parent.$index, $event)"
-				>
-				<div style="background-color:{{col|lampColor}};"></div></td>
-			</tr>
-		</table>
+		<lamp data="lamps" editable="editable"></lamp>
 		<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
 		<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
 	</div>
-	<div class="four columns" ng-include jsrc="'partials/color-selector-grayscale.html'"></div>
+	<div class="four columns" ng-include src="'partials/color-selector-grayscale.html'"></div>
 </div>
 <div>{{message}}</div>

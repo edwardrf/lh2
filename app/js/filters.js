@@ -4,8 +4,6 @@
 /*global console*/
 /* Filters */
 
-var gc = 0;
-
 function intToHexColor(input){
 	var tmp = ("00000" + input.toString(16));
 	tmp = tmp.substr(tmp.length - 6, 6);
@@ -25,7 +23,6 @@ function offsetColor(input, offset){
 
 function grayToHexColor(gray) {
   var intval = gray * 16 * 256 * 256 + gray * 16 * 256;
-  console.log('calculate gray : ' + gc++ + '\tgray :' + gray);
   return intToHexColor(offsetColor(intval, 0x66));
 }
 
