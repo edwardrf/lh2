@@ -6,21 +6,53 @@
 
 /* Controllers */
 
-function EditorCtrl($scope, frame, color, $rootScope){
-	$scope.lamps = frame.newFrame();
+function EditorCtrl($scope, frame, animation){
+	$scope.animation = animation;
+	console.log(animation);
 	$scope.message = "No message";
 	$scope.editable = true;
 
-	var st = 0;
-	var at = 0;
+	var timerHandle = null;
+	var frameCounter = 0;
+	var playingFrame = frame.newFrame();
 
 	$scope.run = function(){
-		$scope.lamps[0][0] = 0;
+		// Point the animation to the local virtual animation where calculation is done.
+		var playingAnimation = {
+			getCurrentFrame : function(){console.log('blur');return {frame: playingFrame};}
+		};
+		$scope.animation = playingAnimation;
+		frameCounter = 0;
+		timerHandle = setInterval(playOneFrame, 10);
 	};
 
 	$scope.stop = function(){
-		$scope.editable=false;
+		clearInterval(timerHandle);
+		$scope.animation = animation;
 	};
+
+	function playOneFrame(){
+		var kfp = 0;
+		var sfp = frameCounter;
+		var keyFrames = animation.getKeyFrames();
+		while(sfp > keyFrames[kfp].time){
+			if(++kfp >= keyFrames.length){frameCounter = 0; sfp = 0;kfp = 0;}
+			sfp -= keyFrames[kfp].time;
+		}
+		var nfp = kfp + 1 >= keyFrames.length ? 0 : kfp + 1;
+		for(var i = 0; i < keyFrames[kfp].frame.length; i++){
+			for(var j = 0; j < keyFrames[kfp].frame[i].length; j++){
+				var a = keyFrames[kfp].frame[i][j];
+				var b = keyFrames[nfp].frame[i][j];
+				var c = Math.round(a + (b - a) / keyFrames[kfp].time * sfp);
+				// if(i == 0 && j == 0) console.log('C is ' + c);
+				playingFrame[i][j] = c;
+			}
+		}
+		frameCounter++;
+		$scope.$apply();
+		// console.log(frameCounter, playingFrame);
+	}
 
 }
 // EditorCtrl.$inject = ['$scope'];
@@ -56,11 +88,34 @@ function ColorSelectGrayScaleCtrl($scope, color){
 
 	$scope.scroll = function(event){
 		event.preventDefault();
-		if(event.originalEvent.wheelDeltaY > 0 && $scope.gray > 0)  $scope.gray--;
-		if(event.originalEvent.wheelDeltaY < 0 && $scope.gray < 15) $scope.gray++;
+		var e = event.originalEvent || event;
+		if(e.wheelDeltaY > 0 && $scope.gray > 0)  $scope.gray--;
+		if(e.wheelDeltaY < 0 && $scope.gray < 15) $scope.gray++;
 		color.setColor($scope.gray);
 	};
 }
 
+function TimelineCtrl($scope, animation){
+	$scope.animation = animation;
 
+	$scope.addFrameBefore = function(frame){
+		var frames = animation.getKeyFrames();
+		var newFrame = $.extend(true, {}, frame);
+		var index = frames.indexOf(frame);
+		frames.splice(index, 0, newFrame);
+	};
+
+	$scope.addFrameAfter= function(frame){
+		var frames = animation.getKeyFrames();
+		var newFrame = $.extend(true, {}, frame);
+		var index = frames.indexOf(frame);
+		frames.splice(index + 1, 0, newFrame);
+		animation.setCurrentFrame(index + 1);
+	};
+
+	$scope.select = function(frame){
+		var index = animation.getKeyFrames().indexOf(frame);
+		animation.setCurrentFrame(index);
+	};
+}
 

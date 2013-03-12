@@ -1,58 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" ng-app="lh">
 <head>
   <meta charset="utf-8">
   <title>LH Editor 2</title>
-  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/foundation.css"/>
   <link rel="stylesheet" href="css/lh.css"/>
-  <script src="js/foundation/modernizr.foundation.js"></script>
+  <script src="js/vendor/custom.modernizr.js"></script>
   <meta name='viewport' content='width=device-width' />
 </head>
 <body>
   <div class="row">
-    <div class="twelve columns">
-      <h1>Welcome to LH2</h1>
-      <ul class="menu">
-        <li><a href="#/edit">edit</a></li>
-        <li><a href="#/play">play</a></li>
-        <li><a href="#/export">export</a></li>
-        <li><a href="#/import">import</a></li>
-      </ul>
+    <div class="small-12 large-12 columns">
+      <dl class="sub-nav">
+        <dd><a href="#/edit">edit</a></dd>
+        <dd><a href="#/play">play</a></dd>
+        <dd><a href="#/export">export</a></dd>
+        <dd><a href="#/import">import</a></dd>
+      </dl>
     </div>
   </div>
   <div ng-view class="row"></div>
 
   <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 large-12 columns">
       Angular seed app: v<span app-version></span>
     </div>
   </div>
 
-  <!-- Included Foundation JS Files (Uncompressed) -->
-  <script src="js/foundation/jquery.js"></script>
-  <script src="js/foundation/jquery.foundation.orbit.js"></script>
-  <script src="js/foundation/jquery.event.swipe.js"></script>
-  <script src="js/foundation/jquery.foundation.mediaQueryToggle.js"></script>
-  <script src="js/foundation/jquery.foundation.buttons.js"></script>
-  <script src="js/foundation/jquery.foundation.accordion.js"></script>
-  <script src="js/foundation/jquery.cookie.js"></script>
-  <script src="js/foundation/jquery.foundation.forms.js"></script>
-  <script src="js/foundation/jquery.foundation.alerts.js"></script>
-  <script src="js/foundation/jquery.foundation.magellan.js"></script>
-  <script src="js/foundation/jquery.event.move.js"></script>
-  <script src="js/foundation/jquery.foundation.topbar.js"></script>
-  <script src="js/foundation/jquery.foundation.navigation.js"></script>
-  <script src="js/foundation/jquery.foundation.tabs.js"></script>
-  <script src="js/foundation/jquery.foundation.reveal.js"></script>
-  <script src="js/foundation/jquery.foundation.joyride.js"></script>
-  <script src="js/foundation/jquery.foundation.clearing.js"></script>
-  <script src="js/foundation/jquery.placeholder.js"></script>
-  <script src="js/foundation/jquery.foundation.tooltips.js"></script>
-  <!-- Foundation init Javascript, safe to override -->
-  <script src="js/foundation/app.js"></script>
+  <!-- Foundation js files -->
+  <script>
+  document.write(
+    '<script src=' + ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +  '.js><\/script>');
+  </script>
+  <script src="js/foundation/foundation.js"></script>
+  <script src="js/foundation/foundation.dropdown.js"></script>
+  <script src="js/foundation/foundation.placeholder.js"></script>
+  <script src="js/foundation/foundation.tooltips.js"></script>
+  <script src="js/foundation/foundation.joyride.js"></script>
+  <script src="js/foundation/foundation.section.js"></script>
+  <script src="js/foundation/foundation.clearing.js"></script>
+  <script src="js/foundation/foundation.topbar.js"></script>
+  <script src="js/foundation/foundation.cookie.js"></script>
+  <script src="js/foundation/foundation.alerts.js"></script>
+  <script src="js/foundation/foundation.forms.js"></script>
+  <script src="js/foundation/foundation.magellan.js"></script>
+  <script src="js/foundation/foundation.reveal.js"></script>
+  <script src="js/foundation/foundation.orbit.js"></script>
 
   <!-- Angularjs JS Files -->
-  <script src="lib/angular/angular.js"></script>
+  <script src="js/angular/angular.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>

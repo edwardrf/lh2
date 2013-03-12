@@ -11,11 +11,13 @@ angular.module('lh.lampDirective', []).
 			// templateUrl	: '/partials/lamp.html',
 			link		: function(scope, elm, attrs){
 
-				var buf = "<table class='large lamp'>";
+				var size = attrs.size || "large";
+				var buf = "<table class='" + size + " lamp'>";
 				for(var i = 0; i < scope.data.length; i++){
 					buf += "<tr>";
 					for(var j = 0; j < scope.data[i].length; j++){
-						buf += "<td class='row" + i + " col" + j + "'><div style='background-color: " + grayToHexColor(scope.data[i][j]) + "'></div></td>";
+						buf += "<td class='row" + i + " col" + j + "'><div style='background-color: " + grayToHexColor(scope.data[i][j]) + ";'></div></td>";
+						//+ ";box-shadow: 0 0 7px 4px " + grayToShadowColor(scope.data[i][j]) // Box shadow is too slow
 					}
 					buf += "</tr>";
 				}
@@ -25,16 +27,11 @@ angular.module('lh.lampDirective', []).
 
 				// Assume the size of the array will never change
 				scope.$watch(function(scp){
-					console.time('serial');
 					var str = JSON.stringify(scp.data);
-					console.timeEnd('serial');
 					return str;
 				}, function(n, o){
-					console.time('redrawParse');
 					var oldVal = JSON.parse(o);
 					var newVal = JSON.parse(n);
-					console.timeEnd('redrawParse');
-					console.time('redraw');
 					for(var i = 0; i < scope.data.length; i++){
 						for(var j = 0; j < oldVal[i].length; j++){
 							if(oldVal[i][j] != newVal[i][j]){
@@ -42,12 +39,11 @@ angular.module('lh.lampDirective', []).
 							}
 						}
 					}
-					console.timeEnd('redraw');
 				});
 
-				scope.$watch(attrs.editable, function(oldVal, newVal){
-					console.log(oldVal, newVal);
-				});
+				if(attrs.editable !== 'true'){
+					return;
+				}
 
 				dom.bind('click', brushMouse);
 				dom.bind('mousemove', brushMouse);
@@ -83,8 +79,12 @@ angular.module('lh.lampDirective', []).
 
 				function dot(x, y, g){
 					var brushColor = grayToHexColor(g);
+					var shadowColor = grayToShadowColor(g);
 					dom.find('.row' + y + '.col' + x  + '>div')
-						.css('background-color', brushColor);
+						.css({
+							'background-color': brushColor
+							// 'box-shadow': '0 0 7px 4px ' + shadowColor // Box-shadow is too slow
+						});
 				}
 			}
 		};

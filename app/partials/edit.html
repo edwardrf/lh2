@@ -1,11 +1,13 @@
 <div ng-controller="EditorCtrl">
-<h2>Edit</h2>
 <div class='row'>
-	<div class="eight columns">
-		<lamp data="lamps" editable="editable"></lamp>
-		<a class="button" href="javascript:void(0);" ng-click="run()">Run</a>
-		<a class="button" href="javascript:void(0);" ng-click="stop()">Stop</a>
+	<div class="small-8 large-8 columns">
+		<lamp data="animation.getCurrentFrame().frame" editable="true"></lamp>
 	</div>
-	<div class="four columns" ng-include src="'partials/color-selector-grayscale.html'"></div>
+	<div class="small-1 large-1 columns" ng-include src="'partials/color-selector-grayscale.html'"></div>
+	<div class="small-3 large-3 columns">
+		<a class="small button" href="javascript:void(0);" ng-click="run()">Run</a>
+		<a class="small button" href="javascript:void(0);" ng-click="stop()">Stop</a>
+	</div>
+	<div class="small-12 large-12 columns" ng-include src="'partials/timeline.html'"></div>
 </div>
 <div>{{message}}</div>

@@ -10,7 +10,7 @@
 angular.module('lh.services', []).
 	value('version', '0.1').
 	factory('frame', function(){
-		var SIZE = 10;
+		var SIZE = 8;
 
 		var frame = {};
 		var i = 0;
@@ -48,4 +48,16 @@ angular.module('lh.services', []).
 		color.setColor = function(c){this.currentColor = c;};
 		color.getColor = function(){return this.currentColor;};
 		return color;
+	}).factory('animation', function(frame){
+		var animation = {keyFrames : [{frame: frame.newFrame(), time:100}], currentFrame : 0};
+		animation.setKeyFrames = function(kf){this.keyFrames = kf;};
+		animation.getKeyFrames = function(){return this.keyFrames;};
+		animation.setCurrentFrame = function(i){
+			console.log('setting current ' + i);
+			this.currentFrame = i;
+		};
+		animation.getCurrentFrame = function(){
+			return this.keyFrames[this.currentFrame];
+		};
+		return animation;
 	});
