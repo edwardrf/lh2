@@ -1,0 +1,10 @@
+service arduino
+{
+	protocol       = tcp
+	user           = root
+	wait           = no
+	port           = 9090
+	type	= UNLISTED
+	server	= /usr/bin/arduino_program
+}
+

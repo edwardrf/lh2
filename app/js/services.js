@@ -49,7 +49,7 @@ angular.module('lh.services', []).
 		color.getColor = function(){return this.currentColor;};
 		return color;
 	}).factory('animation', function(frame){
-		var animation = {keyFrames : [{frame: frame.newFrame(), time:100}], currentFrame : 0};
+		var animation = {keyFrames : [{frame: frame.newFrame(), time:30}], currentFrame : 0};
 		animation.setKeyFrames = function(kf){this.keyFrames = kf;};
 		animation.getKeyFrames = function(){return this.keyFrames;};
 		animation.setCurrentFrame = function(i){
@@ -57,6 +57,7 @@ angular.module('lh.services', []).
 			this.currentFrame = i;
 		};
 		animation.getCurrentFrame = function(){
+			if(this.currentFrame > this.keyFrames.length) this.currentFrame = this.keyFrames.length - 1;
 			return this.keyFrames[this.currentFrame];
 		};
 		return animation;

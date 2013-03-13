@@ -1,6 +1,5 @@
 table.lamp {
 	background-color: #555555;
-	cursor: crosshair;
 	border-spacing: 0px;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -9,6 +8,10 @@ table.lamp {
 	-ms-user-select: none;
 	user-select: none;
 	border: none;
+}
+
+table.lamp.large {
+	cursor: crosshair;
 }
 
 table.lamp tbody tr:nth-child(even){
@@ -57,6 +60,7 @@ table.lamp tr.selected{
 .timeline>div{
 	width: auto;
 	white-space: nowrap;
+	float: left;
 }
 
 .timeline .frame {
@@ -94,5 +98,4 @@ table.lamp tr.selected{
 
 .timeline .frame a{
 	margin-bottom: 2px;
-	width: 40px;
 }

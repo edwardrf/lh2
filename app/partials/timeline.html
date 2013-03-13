@@ -1,0 +1,15 @@
+<div ng-controller="TimelineCtrl" class="timeline small-12 large-12 columns">
+	<div>
+		<div ng-repeat="frame in animation.getKeyFrames()" class="frame" ng-class="{selected: frame == animation.getCurrentFrame()}">
+			<div ng-click="select(frame)">
+				<lamp data="frame.frame" editable='false' size='small'></lamp>
+			</div>
+			<div class="controls">
+				<input ng-model="frame.time"/>0<sub>ms</sub><br/>
+				<a class="tiny button" ng-click="addFrameBefore(frame)">&lt;</a>
+				<a class="tiny button" ng-click="addFrameAfter(frame)">&gt;</a><br/>
+				<a class="tiny button" ng-click="remove(frame)">X</a>
+			</div>
+		</div>
+	</div>
+</div>

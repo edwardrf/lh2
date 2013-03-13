@@ -1,0 +1,11 @@
+coreutils-stty
+socat
+xinetd
+kmod-usb-serial-ftdi
+
+
+/etc/init.d/xinetd enable
+/etc/xinetd.d/arduino
+/usr/bin/arduino_program
+
+mdnsd  -- zeroconf
