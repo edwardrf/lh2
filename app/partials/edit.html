@@ -5,8 +5,8 @@
 	</div>
 	<div class="small-1 large-1 columns" ng-include src="'partials/color-selector-grayscale.html'"></div>
 	<div class="small-3 large-3 columns">
-		<a class="small button" href="javascript:void(0);" ng-click="run()">Run</a>
-		<a class="small button" href="javascript:void(0);" ng-click="stop()">Stop</a><br/>
+		<a class="small button" href="javascript:void(0);" ng-click="run()" ng-hide="isPlaying">Run</a>
+		<a class="small button" href="javascript:void(0);" ng-click="stop()" ng-show="isPlaying">Stop</a><br/>
 		<a class="small button" href="javascript:void(0);" ng-click="moveLeft()">Move Left</a>
 		<a class="small button" href="javascript:void(0);" ng-click="moveRight()">Move Right</a><br/>
 		<a class="small button" href="javascript:void(0);" ng-click="moveUp()">Move Up</a>
@@ -15,3 +15,4 @@
 	<div class="small-12 large-12 columns" ng-include src="'partials/timeline.html'"></div>
 </div>
 <div>{{message}}</div>
+

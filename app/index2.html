@@ -11,21 +11,8 @@
   <meta name='viewport' content='width=device-width' />
 </head>
 <body>
-  <div class="row">
-    <div class="small-12 large-12 columns">
-      <dl class="sub-nav">
-        <dd><a href="#/edit">edit</a></dd>
-        <dd><a href="#/play">play</a></dd>
-        <dd><a href="#/export">export</a></dd>
-        <dd><a href="#/import">import</a></dd>
-      </dl>
-    </div>
-  </div>
-  <div ng-view class="row"></div>
-  <div class="row">
-    <div class="small-12 large-12 columns">
-      Angular seed app: v<span app-version></span>
-    </div>
+  <div class="row" ng-controller="DirectCtrl">
+    <lamp data="f" editable="true"></lamp>
   </div>
 
   <!-- Foundation js files -->

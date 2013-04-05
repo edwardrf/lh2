@@ -49,11 +49,11 @@ angular.module('lh.services', []).
 		color.getColor = function(){return this.currentColor;};
 		return color;
 	}).factory('animation', function(frame){
-		var animation = {keyFrames : [{frame: frame.newFrame(), time:30}], currentFrame : 0};
+		var keyFrame = {frame: frame.newFrame(), time:30, '$$hashKey': function(){return JSON.stringify(this);}};
+		var animation = {keyFrames : [keyFrame], currentFrame : 0};
 		animation.setKeyFrames = function(kf){this.keyFrames = kf;};
 		animation.getKeyFrames = function(){return this.keyFrames;};
 		animation.setCurrentFrame = function(i){
-			console.log('setting current ' + i);
 			this.currentFrame = i;
 		};
 		animation.getCurrentFrame = function(){

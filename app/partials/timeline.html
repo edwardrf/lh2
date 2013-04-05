@@ -1,6 +1,6 @@
 <div ng-controller="TimelineCtrl" class="timeline small-12 large-12 columns">
-	<div>
-		<div ng-repeat="frame in animation.getKeyFrames()" class="frame" ng-class="{selected: frame == animation.getCurrentFrame()}">
+	<div ui-sortable ng-model="keyFrames">
+		<div ng-repeat="frame in keyFrames" class="frame" ng-class="{selected: frame == animation.getCurrentFrame()}">
 			<div ng-click="select(frame)">
 				<lamp data="frame.frame" editable='false' size='small'></lamp>
 			</div>

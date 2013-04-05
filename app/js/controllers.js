@@ -22,12 +22,13 @@ function EditorCtrl($scope, frame, animation){
 	$scope.moveUp = function(){
 		var f = animation.getCurrentFrame();
 		var top = $.extend([], f.frame[0]);
-		for(var i = 0; i < f.frame.length - 1; i++){
-			for(var j = 0; j < f.frame[i].length; j++){
+		var i, j;
+		for(i = 0; i < f.frame.length - 1; i++){
+			for(j = 0; j < f.frame[i].length; j++){
 				f.frame[i][j] = f.frame[i + 1][j];
 			}
 		}
-		for(var j = 0; j < f.frame[0].length; j++){
+		for(j = 0; j < f.frame[0].length; j++){
 			f.frame[f.frame.length - 1][j] = top[j];
 		}
 	};
@@ -35,13 +36,14 @@ function EditorCtrl($scope, frame, animation){
 	$scope.moveDown = function(){
 		var f = animation.getCurrentFrame();
 		var bottom = $.extend([], f.frame[f.frame.length - 1]);
-		for(var i = f.frame.length - 1; i > 0 ; i --){
-			for(var j = 0; j < f.frame[i].length; j++){
+		var i, j;
+		for(i = f.frame.length - 1; i > 0 ; i --){
+			for(j = 0; j < f.frame[i].length; j++){
 				var b = i - 1 < 0 ? f.frame.length -1 : i - 1;
 				f.frame[i][j] = f.frame[b][j];
 			}
 		}
-		for(var j = 0; j < f.frame[0].length; j++){
+		for(j = 0; j < f.frame[0].length; j++){
 			f.frame[0][j] = bottom[j];
 		}
 	};
@@ -99,9 +101,9 @@ function EditorCtrl($scope, frame, animation){
 
 	function playOneFrame(){
 		var kfp = 0;
-		var sfp = frameCounter;
 		var t = (new Date()).getTime() - startPlayTime;
 		frameCounter = Math.floor(t / 10) % totalFrames;
+		var sfp = frameCounter;
 		var keyFrames = animation.getKeyFrames();
 		while(sfp > keyFrames[kfp].time){
 			if(++kfp >= keyFrames.length){frameCounter = 0; sfp = 0;kfp = 0;}
@@ -162,6 +164,7 @@ function ColorSelectGrayScaleCtrl($scope, color){
 
 function TimelineCtrl($scope, animation){
 	$scope.animation = animation;
+	$scope.keyFrames = animation.getKeyFrames();
 
 	$scope.addFrameBefore = function(frame){
 		var frames = animation.getKeyFrames();
@@ -190,3 +193,14 @@ function TimelineCtrl($scope, animation){
 	};
 }
 
+function DirectCtrl($scope, frame){
+	$scope.f = frame.newFrame();
+	setInterval(function(){
+		for(var i = 0; i < $scope.f.length; i++){
+			for(var j = 0; j < $scope.f[i].length; j++){
+				if($scope.f[i][j] < 15) $scope.f[i][j]++;
+			}
+		}
+		$scope.$apply();
+	}, 100);
+}
