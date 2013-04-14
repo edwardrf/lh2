@@ -59,7 +59,7 @@ angular.module('lh.lampDirective', []).
 
 				function brushTouch(event){
 					event.preventDefault();
-					var touches = event.changedTouches;
+					var touches = event.originalEvent.changedTouches;
 					for (var i=0; i<touches.length; i++) {
 						brush(touches[i].pageX, touches[i].pageY);
 					}

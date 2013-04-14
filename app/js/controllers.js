@@ -193,14 +193,26 @@ function TimelineCtrl($scope, animation){
 	};
 }
 
-function DirectCtrl($scope, frame){
+function DirectCtrl($scope, frame, color){
 	$scope.f = frame.newFrame();
+	$scope.query = '';
+	color.setColor(14);
 	setInterval(function(){
+		var query = 'f';
+		var post = false;
 		for(var i = 0; i < $scope.f.length; i++){
 			for(var j = 0; j < $scope.f[i].length; j++){
-				if($scope.f[i][j] < 15) $scope.f[i][j]++;
+				if($scope.f[i][j] > 0){
+					$scope.f[i][j]--;
+					post = true;
+				}
+				query += $scope.f[i][j].toString(16);
 			}
 		}
 		$scope.$apply();
+		if(post){
+			$scope.query = query;
+			$.get('http://lamp.local/cgi-bin/p.lua?' + query);
+		}
 	}, 100);
 }
